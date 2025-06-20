@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyController : MonoBehaviour
 {
 
-    PlayerController playerController;
-
     void Start()
+    {
+        Debug.Log("Enemy Start");
+
+         
+    }
+
+    public void Init()
     {
         
     }
