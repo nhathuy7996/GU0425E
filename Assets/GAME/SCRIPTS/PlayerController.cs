@@ -11,8 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool _isShoot = false;
     public bool IsShoot => _isShoot;
 
-    [SerializeField] Transform _fireSpot;
-    [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] GunController _gunController;
+
 
     public PLAYER_STATE PlayerState => _playerState;
     [SerializeField]
@@ -22,19 +22,17 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody2D rigidbody2D;
 
-    float timer = 0;
 
     void Start()
     {
         this.anim = this.GetComponentInChildren<AnimController>();
         this.rigidbody2D = this.GetComponent<Rigidbody2D>();
-
-       
+        this._gunController = this.GetComponentInChildren<GunController>(); 
     }
 
     void Update()
     {
-        timer += Time.deltaTime; 
+        
 
         this.AutoDetectState();
         float face = this.transform.localScale.x;
@@ -48,12 +46,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             this.rigidbody2D.AddForce(Vector2.up * jumpForce);
 
-        if (Input.GetKey(KeyCode.C) && timer>= 1)
+        if (Input.GetKey(KeyCode.C) )
         {
-            timer = 0;
-            Quaternion q = this._bulletPrefab.transform.rotation;
-            q.eulerAngles = new Vector3(0,0,face == -1? 180:0);
-            Instantiate(this._bulletPrefab,this._fireSpot.position,q);
+            this._gunController.Fire(face);
         }
         this._isShoot = Input.GetKey(KeyCode.C);
 
