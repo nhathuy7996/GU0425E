@@ -7,10 +7,23 @@ public class Bullet : MonoBehaviour
     [SerializeField] float _speed;
     Rigidbody2D rigi;
 
+    Coroutine coroutineDisable;
+
     void Start()
     {
         this.rigi = this.GetComponent<Rigidbody2D>();
-        Destroy(this.gameObject, 10);
+         
+    }
+
+    void OnEnable()
+    {
+        this.coroutineDisable = StartCoroutine(Deactive());
+    }
+
+    void OnDisable()
+    {
+        if (this.coroutineDisable != null)
+            StopCoroutine(this.coroutineDisable);
     }
 
     // Update is called once per frame
@@ -19,8 +32,14 @@ public class Bullet : MonoBehaviour
         this.rigi.velocity = this.transform.right * _speed;
     }
 
-    void OTriggerEnter2D(Collider2D collision)
+    IEnumerator Deactive()
     {
-        Destroy(this.gameObject); 
+        yield return new WaitForSeconds(10);
+        this.gameObject.SetActive(false); 
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        this.gameObject.SetActive(false); 
     }
 }

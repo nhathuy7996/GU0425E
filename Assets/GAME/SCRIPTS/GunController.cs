@@ -22,7 +22,13 @@ public class GunController : MonoBehaviour
             return;
         timer = 0;
         Quaternion q = this._bulletPrefab.transform.rotation;
-        q.eulerAngles = new Vector3(0,0,face == -1? 180:0);
-        Instantiate(this._bulletPrefab,this._fireSpot.position,q);
+        q.eulerAngles = new Vector3(0, 0, face == -1 ? 180 : 0);
+
+        //Instantiate(this._bulletPrefab, this._fireSpot.position, q);
+
+        Bullet b = BulletPooling.Instant.getBullet();
+        b.transform.rotation = q;
+        b.transform.position = this._fireSpot.position;
+        b.gameObject.SetActive(true);
     }
 }

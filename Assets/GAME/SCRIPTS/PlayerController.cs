@@ -37,8 +37,6 @@ public class PlayerController : Singleton<PlayerController>
 
     void Update()
     {
-        
-
         this.AutoDetectState();
         float face = this.transform.localScale.x;
         if (Input.GetAxisRaw("Horizontal") != 0)
