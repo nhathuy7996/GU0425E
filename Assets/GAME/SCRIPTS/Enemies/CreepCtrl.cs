@@ -10,7 +10,7 @@ public class CreepCtrl : MonoBehaviour
         this._gameManager = gm;
     }
 
-    void OTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.TryGetComponent<Bullet>(out var bullet))
         {
