@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
+    
     [SerializeField]
     PLAYER_STATE _playerState = PLAYER_STATE.IsIdle;
     [SerializeField] bool _isShoot = false;
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidbody2D;
 
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     void Start()
     {
         this.anim = this.GetComponentInChildren<AnimController>();
