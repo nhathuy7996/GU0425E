@@ -45,8 +45,15 @@ public class EnemyManager : MonoBehaviour
         newPos.x = Random.Range(-5, 6);
         newPos.y = Random.Range(3, 6);
 
-        Instantiate(enemyPrefab, newPos, Quaternion.identity, this.transform)
-        .Init(this._gameManager,_enemySpeed);
+        // CreepCtrl c = EnemyPooling.Instant.GetCreep();
+        // c.transform.position = newPos;
+        // c.gameObject.SetActive(true);
+        // c.Init(this._gameManager, _enemySpeed);
+
+        CreepCtrl c = LazyPooling.Instant.getObjType(this.enemyPrefab);
+        c.transform.position = newPos;
+        c.Init(this._gameManager, _enemySpeed);
+         c.gameObject.SetActive(true);
             
        // Invoke("SpawnEnemy",Random.Range(3,5));
     }

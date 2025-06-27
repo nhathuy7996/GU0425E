@@ -26,7 +26,12 @@ public class GunController : MonoBehaviour
 
         //Instantiate(this._bulletPrefab, this._fireSpot.position, q);
 
-        Bullet b = BulletPooling.Instant.getBullet();
+        // Bullet b = BulletPooling.Instant.getBullet();
+        // b.transform.rotation = q;
+        // b.transform.position = this._fireSpot.position;
+        // b.gameObject.SetActive(true);
+
+        GameObject b = LazyPooling.Instant.getObject(this._bulletPrefab);
         b.transform.rotation = q;
         b.transform.position = this._fireSpot.position;
         b.gameObject.SetActive(true);
