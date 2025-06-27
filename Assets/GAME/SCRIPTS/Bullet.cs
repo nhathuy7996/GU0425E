@@ -21,6 +21,6 @@ public class Bullet : MonoBehaviour
 
     void OTriggerEnter2D(Collider2D collision)
     {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject); 
     }
 }

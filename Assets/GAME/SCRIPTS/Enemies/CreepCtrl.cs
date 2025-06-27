@@ -44,8 +44,8 @@ public class CreepCtrl : MonoBehaviour
         Destroy(bullet.gameObject);
         Destroy(this.gameObject);
 
-        this._gameManager.AddScore();
-         
+        // this._gameManager.AddScore();
+        GameManager.Instant.AddScore();
     }
 
 }
