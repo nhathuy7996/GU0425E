@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    [SerializeField] float _enemySpeed = 2;
     [SerializeField] CreepCtrl enemyPrefab;
     [SerializeField] GameManager _gameManager;
 
@@ -42,10 +43,10 @@ public class EnemyManager : MonoBehaviour
     {
         Vector3 newPos = Vector3.zero;
         newPos.x = Random.Range(-5, 6);
-        newPos.y = Random.Range(-5, 6);
+        newPos.y = Random.Range(3, 6);
 
         Instantiate(enemyPrefab, newPos, Quaternion.identity, this.transform)
-        .Init(this._gameManager);
+        .Init(this._gameManager,_enemySpeed);
             
        // Invoke("SpawnEnemy",Random.Range(3,5));
     }
