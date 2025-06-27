@@ -4,26 +4,49 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;
-    // Start is called before the first frame update
+    [SerializeField] CreepCtrl enemyPrefab;
+    [SerializeField] GameManager _gameManager;
+
     void Start()
     {
-        
+        //InvokeRepeating("SpawnEnemy",5,4);
+
+        StartCoroutine(SpawnEnemyRepeat());
     }
 
-    // Update is called once per frame
-    void Update()
+    // float timer = 0, maxTimeSpawn = 5;
+    // // Update is called once per frame
+    // void Update()
+    // {
+    //     timer += Time.deltaTime;
+    //     if (timer > maxTimeSpawn)
+    //     {
+    //         SpawnEnemy();
+    //         maxTimeSpawn = Random.Range(3,5);
+    //         timer = 0;
+    //     }
+    // }
+
+    IEnumerator SpawnEnemyRepeat()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        while (true)
         {
-            Vector3 newPos = Vector3.zero;
-            newPos.x = Random.Range(-5, 6);
-            newPos.y = Random.Range(-5, 6);
-
-            Instantiate(enemyPrefab, newPos, Quaternion.identity, this.transform);
-
-            Destroy(this.gameObject);
-            
+            yield return new WaitForSeconds(Random.Range(3,5));
+            SpawnEnemy();
+ 
         }
+       
+    }
+
+    void SpawnEnemy()
+    {
+        Vector3 newPos = Vector3.zero;
+        newPos.x = Random.Range(-5, 6);
+        newPos.y = Random.Range(-5, 6);
+
+        Instantiate(enemyPrefab, newPos, Quaternion.identity, this.transform)
+        .Init(this._gameManager);
+            
+       // Invoke("SpawnEnemy",Random.Range(3,5));
     }
 }

@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-
     [SerializeField] Transform _fireSpot;
     [SerializeField] GameObject _bulletPrefab;
-
 
     float timer = 0;
 
