@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
- 
+
+    [SerializeField]
+    float _level = 0; 
 
     [SerializeField]
     int _score = 0;
