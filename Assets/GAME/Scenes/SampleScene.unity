@@ -548,8 +548,7 @@ MonoBehaviour:
   _isShoot: 0
   _gunController: {fileID: 0}
   anim: {fileID: 0}
-  Speed: 10
-  jumpForce: 600
+  playerDataSO: {fileID: 11400000, guid: e2222063586b241c28960350351cd950, type: 2}
 --- !u!50 &1535698306
 Rigidbody2D:
   serializedVersion: 4
@@ -688,9 +687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f014d3c0267537340ba6f17beca3a979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxScoreLevelUp: 3
-  _level: 0
-  _score: 0
+  playerData:
+    level: 0
+    score: 0
+    maxScoreLevelUp: 3
 --- !u!4 &1921685353
 Transform:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField]
     AnimController anim;
 
-    [SerializeField] float Speed = 10, jumpForce = 100;
+    [SerializeField] PlayerSO playerDataSO;
 
     Rigidbody2D rigidbody2D;
 
@@ -47,31 +47,27 @@ public class PlayerController : Singleton<PlayerController>
         this.transform.localScale = new Vector3(face, 1, 1);
 
         if (Input.GetKeyDown(KeyCode.Space))
-            this.rigidbody2D.AddForce(Vector2.up * jumpForce);
+            this.rigidbody2D.AddForce(Vector2.up * this.playerDataSO.jumpForce);
 
         if (Input.GetKey(KeyCode.C) )
         {
             this._gunController.Fire(face);
         }
+
+  if (Input.GetKey(KeyCode.Z) )
+        {
+            this.playerDataSO.speed = 20;
+        }
+
         this._isShoot = Input.GetKey(KeyCode.C);
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            this.anim.SetSpeed(0.2f);
-            this.Speed = 2;
-        }
-
-        if (Input.GetKeyUp(KeyCode.Z))
-        {
-            this.anim.SetSpeed(1f);
-             this.Speed = 10;
-        }
+        
     }
 
     void FixedUpdate()
     {
         Vector2 movement = this.rigidbody2D.velocity;
-        movement.x = Input.GetAxisRaw("Horizontal") * this.Speed;
+        movement.x = Input.GetAxisRaw("Horizontal") * this.playerDataSO.speed;
         this.rigidbody2D.velocity = movement;
     }
 
