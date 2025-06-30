@@ -12,7 +12,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] bool _isShoot = false;
     public bool IsShoot => _isShoot;
 
-    [SerializeField] GunController _gunController;
+    [SerializeField] IGun _gunController;
 
 
     public PLAYER_STATE PlayerState => _playerState;
@@ -32,7 +32,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         this.anim = this.GetComponentInChildren<AnimController>();
         this.rigidbody2D = this.GetComponent<Rigidbody2D>();
-        this._gunController = this.GetComponentInChildren<GunController>(); 
+        this._gunController = this.GetComponentInChildren<IGun>(); 
     }
 
     void Update()
@@ -49,19 +49,12 @@ public class PlayerController : Singleton<PlayerController>
         if (Input.GetKeyDown(KeyCode.Space))
             this.rigidbody2D.AddForce(Vector2.up * this.playerDataSO.jumpForce);
 
-        if (Input.GetKey(KeyCode.C) )
+        if (Input.GetKey(KeyCode.C))
         {
             this._gunController.Fire(face);
         }
-
-  if (Input.GetKey(KeyCode.Z) )
-        {
-            this.playerDataSO.speed = 20;
-        }
-
-        this._isShoot = Input.GetKey(KeyCode.C);
-
         
+        this._isShoot = Input.GetKey(KeyCode.C);
     }
 
     void FixedUpdate()
