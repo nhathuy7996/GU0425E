@@ -5,7 +5,7 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     [SerializeField] Transform _fireSpot;
-    [SerializeField] GameObject _bulletPrefab;
+    [SerializeField] GunSO gunDataSO;
 
     float timer = 0;
 
@@ -18,10 +18,10 @@ public class GunController : MonoBehaviour
 
     public void Fire(float face)
     {
-        if (timer < 1)
+        if (timer < this.gunDataSO.fireSpeed)
             return;
         timer = 0;
-        Quaternion q = this._bulletPrefab.transform.rotation;
+        Quaternion q = this.gunDataSO.bulletPrefab.transform.rotation;
         q.eulerAngles = new Vector3(0, 0, face == -1 ? 180 : 0);
 
         //Instantiate(this._bulletPrefab, this._fireSpot.position, q);
@@ -31,9 +31,11 @@ public class GunController : MonoBehaviour
         // b.transform.position = this._fireSpot.position;
         // b.gameObject.SetActive(true);
 
-        GameObject b = LazyPooling.Instant.getObject(this._bulletPrefab);
+        Bullet b = LazyPooling.Instant.getObjType(this.gunDataSO.bulletPrefab);
         b.transform.rotation = q;
         b.transform.position = this._fireSpot.position;
+        b.Init(this.gunDataSO.bulletSpeed, this.gunDataSO.dmg);
+
         b.gameObject.SetActive(true);
     }
 }

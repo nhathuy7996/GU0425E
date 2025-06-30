@@ -835,6 +835,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1535698304}
     m_Modifications:
+    - target: {fileID: 3237927240015075556, guid: 1d7a5ca671627f140a80911b1b305ba8, type: 3}
+      propertyPath: gunDataSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 161017af038804a508b5c459de9130cb, type: 2}
     - target: {fileID: 6655541533161934588, guid: 1d7a5ca671627f140a80911b1b305ba8, type: 3}
       propertyPath: m_Name
       value: GunContrl
