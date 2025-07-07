@@ -7,6 +7,8 @@ public class Bullet : MonoBehaviour
     [SerializeField] float _speed;
     Rigidbody2D rigi;
 
+    float _dmg;
+
     Coroutine coroutineDisable;
 
     void Start()
@@ -18,7 +20,7 @@ public class Bullet : MonoBehaviour
     public void Init(float speed, float dmg)
     {
         this._speed = speed;
-        //this.dmg = dmg;
+        this._dmg = dmg;
     }
 
     void OnEnable()
@@ -49,7 +51,7 @@ public class Bullet : MonoBehaviour
         this.gameObject.SetActive(false);
         if (collision.TryGetComponent<IHitable>(out var isCanHit))
         {
-            isCanHit.GetHit(0);
+            isCanHit.GetHit(this._dmg);
         }
     }
 }

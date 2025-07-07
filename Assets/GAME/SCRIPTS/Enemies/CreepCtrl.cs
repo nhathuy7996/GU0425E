@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class CreepCtrl : MonoBehaviour, IHitable
 {
-    GameManager _gameManager;
+    [SerializeField] float _HP = 100;
+    float maxHP = 100;
     Vector2 _target;
     [SerializeField] float _speed = 1;
-    public void Init(GameManager gm, float speed)
+    public void Init(float speed)
     {
-        this._gameManager = gm;
         this._speed = speed;
         ResetTarget();
+        this._HP = Random.Range(50, 100);
+        this.maxHP = this._HP;
     }
 
     void Update()
@@ -37,10 +39,14 @@ public class CreepCtrl : MonoBehaviour, IHitable
 
     public void GetHit(float dmg)
     {
-        this.gameObject.SetActive(false);
-        // this._gameManager.AddScore();
-        ObserverManager.Notify("addScore",1);
-      
         
+        // this._gameManager.AddScore();
+        this._HP -= dmg;
+        if (this._HP <= 0)
+        {
+            ObserverManager.Notify("addScore", this.maxHP / 100 * 10);
+            this.gameObject.SetActive(false);
+        }
+       
     }
 }

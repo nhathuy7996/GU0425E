@@ -10,7 +10,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     PlayerData playerData;
 
-    public int Score => playerData.score;
+    public float Score => playerData.score;
 
     void Start()
     {
@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
         this.playerData = JsonUtility.FromJson<PlayerData>(json); 
     }
 
-    void Oestroy()
+    void OnDestroy()
     {
         ObserverManager.RemoveListener("addScore", AddScore);
     }
@@ -31,7 +31,7 @@ public class GameManager : Singleton<GameManager>
 
     public void AddScore(params object[] datas)
     {
-        this.playerData.score += (int)datas[0];
+        this.playerData.score += (float)datas[0];
         if (this.playerData.score >= this.playerData.maxScoreLevelUp)
         {
             this.playerData.level++;
@@ -55,7 +55,7 @@ public class GameManager : Singleton<GameManager>
 public class PlayerData
 {
     public int level;
-    public int score;
+    public float score;
 
-    public int maxScoreLevelUp = 3;
+    public int maxScoreLevelUp = 10;
 }

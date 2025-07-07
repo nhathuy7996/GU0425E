@@ -52,7 +52,7 @@ public class EnemyManager : MonoBehaviour
 
         CreepCtrl c = LazyPooling.Instant.getObjType(this.enemyPrefab);
         c.transform.position = newPos;
-        c.Init(this._gameManager, _enemySpeed);
+        c.Init(  _enemySpeed);
          c.gameObject.SetActive(true);
             
        // Invoke("SpawnEnemy",Random.Range(3,5));
