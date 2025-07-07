@@ -15,6 +15,12 @@ public class Bullet : MonoBehaviour
          
     }
 
+    public void Init(float speed, float dmg)
+    {
+        this._speed = speed;
+        //this.dmg = dmg;
+    }
+
     void OnEnable()
     {
         this.coroutineDisable = StartCoroutine(Deactive());
