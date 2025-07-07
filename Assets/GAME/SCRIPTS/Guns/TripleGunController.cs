@@ -13,6 +13,11 @@ public class TripleGunController : MonoBehaviour, IGun
         timer += Time.deltaTime;
     }
 
+    void Start()
+    {
+        this.gunDataSO = Resources.Load<GunSO>("GunDataSO"); 
+    }
+
     public void Fire(float face)
     {
         if (timer < this.gunDataSO.fireSpeed)
@@ -28,7 +33,7 @@ public class TripleGunController : MonoBehaviour, IGun
 
         b.gameObject.SetActive(true);
 
-    
+
         q.eulerAngles = new Vector3(0, 0, face == -1 ? 160 : -20);
 
         b = LazyPooling.Instant.getObjType(this.gunDataSO.bulletPrefab);
@@ -37,8 +42,8 @@ public class TripleGunController : MonoBehaviour, IGun
         b.Init(this.gunDataSO.bulletSpeed, this.gunDataSO.dmg);
 
         b.gameObject.SetActive(true);
-        
-         q.eulerAngles = new Vector3(0, 0, face == -1 ? 210 : 20);
+
+        q.eulerAngles = new Vector3(0, 0, face == -1 ? 210 : 20);
 
         b = LazyPooling.Instant.getObjType(this.gunDataSO.bulletPrefab);
         b.transform.rotation = q;

@@ -44,7 +44,7 @@ public class CreepCtrl : MonoBehaviour, IHitable
         this._HP -= dmg;
         if (this._HP <= 0)
         {
-            ObserverManager.Notify("addScore", this.maxHP / 100 * 10);
+            ObserverManager.Notify(ObserverKey.addScore, this.maxHP / 100 * 10);
             this.gameObject.SetActive(false);
         }
        

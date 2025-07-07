@@ -17,15 +17,20 @@ public class GameManager : Singleton<GameManager>
         // this._level = PlayerPrefs.GetInt("Level");
         // this._score = PlayerPrefs.GetInt("Score");
 
-        ObserverManager.AddListener("addScore", AddScore);
-
-        string json = PlayerPrefs.GetString(typeof(PlayerData).ToString(), "{}");
-        this.playerData = JsonUtility.FromJson<PlayerData>(json); 
+        ObserverManager.AddListener(ObserverKey.addScore, AddScore);
+        ObserverManager.AddListener(ObserverKey.loadPlayerData, loadData);
+     
     }
 
     void OnDestroy()
     {
-        ObserverManager.RemoveListener("addScore", AddScore);
+        ObserverManager.RemoveListener(ObserverKey.addScore, AddScore);
+        ObserverManager.RemoveListener(ObserverKey.loadPlayerData, loadData);
+    }
+
+    void loadData(params object[] datas)
+    {
+        this.playerData = (PlayerData)datas[0];
     }
 
 
@@ -37,11 +42,7 @@ public class GameManager : Singleton<GameManager>
             this.playerData.level++;
             this.playerData.score = 0;
         }
-
-        PlayerPrefs.SetString(typeof(PlayerData).ToString(), JsonUtility.ToJson(this.playerData));
-
-        // PlayerPrefs.SetInt("Score", this._score);
-        // PlayerPrefs.SetInt("Level", this._level);
+        ObserverManager.Notify(ObserverKey.savePlayerData, this.playerData);
     }
 
     public void ResetScore()

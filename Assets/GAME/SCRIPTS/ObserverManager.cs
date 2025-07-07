@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public static class ObserverKey
+{
+    public static readonly string addScore = "addScore";
+    public static readonly string loadPlayerData = "loadData";
+    public static readonly string savePlayerData = "saveData";
+}
+
 public static class ObserverManager
 {
     static Dictionary<string, List<Action<object[]>>> _actions = new Dictionary<string, List<Action<object[]>>>();

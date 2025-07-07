@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fireSpot: {fileID: 136328716}
-  gunDataSO: {fileID: 11400000, guid: 161017af038804a508b5c459de9130cb, type: 2}
+  gunDataSO: {fileID: 0}
 --- !u!1 &384296854
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +756,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921685353}
   - component: {fileID: 1921685352}
+  - component: {fileID: 1921685354}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -794,6 +795,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1921685354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1921685351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f5e9ac9e4e0e465d8246c923ec8289b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1993234937
 GameObject:
   m_ObjectHideFlags: 0

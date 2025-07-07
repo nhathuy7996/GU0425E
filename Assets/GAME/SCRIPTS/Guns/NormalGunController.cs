@@ -9,6 +9,11 @@ public class NormalGunController : MonoBehaviour, IGun
 
     float timer = 0;
 
+    void Start()
+    {
+        this.gunDataSO = Resources.Load<GunSO>("DATA_SO/GunDataSO");
+        Debug.LogError("Start Gun");
+    }
 
     // Update is called once per frame
     void Update()
