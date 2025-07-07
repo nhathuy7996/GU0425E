@@ -17,14 +17,21 @@ public class GameManager : Singleton<GameManager>
         // this._level = PlayerPrefs.GetInt("Level");
         // this._score = PlayerPrefs.GetInt("Score");
 
+        ObserverManager.AddListener("addScore", AddScore);
+
         string json = PlayerPrefs.GetString(typeof(PlayerData).ToString(), "{}");
         this.playerData = JsonUtility.FromJson<PlayerData>(json); 
     }
 
-
-    public void AddScore(int scr = 1)
+    void Oestroy()
     {
-        this.playerData.score += scr;
+        ObserverManager.RemoveListener("addScore", AddScore);
+    }
+
+
+    public void AddScore(params object[] datas)
+    {
+        this.playerData.score += (int)datas[0];
         if (this.playerData.score >= this.playerData.maxScoreLevelUp)
         {
             this.playerData.level++;

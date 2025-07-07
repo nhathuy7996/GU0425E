@@ -4,6 +4,5 @@ using UnityEngine;
 
 public interface IGun
 {
-    
     public void Fire(float face);
 }

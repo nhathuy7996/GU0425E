@@ -46,6 +46,10 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        this.gameObject.SetActive(false); 
+        this.gameObject.SetActive(false);
+        if (collision.TryGetComponent<IHitable>(out var isCanHit))
+        {
+            isCanHit.GetHit(0);
+        }
     }
 }

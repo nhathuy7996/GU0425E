@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreepCtrl : MonoBehaviour
+public class CreepCtrl : MonoBehaviour, IHitable
 {
     GameManager _gameManager;
     Vector2 _target;
@@ -34,18 +34,13 @@ public class CreepCtrl : MonoBehaviour
         this._target .y = Random.Range(3, 6);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+
+    public void GetHit(float dmg)
     {
-        if (!collision.TryGetComponent<Bullet>(out var bullet))
-        {
-            return;
-        }
-
-        bullet.gameObject.gameObject.SetActive(false);
         this.gameObject.SetActive(false);
-
         // this._gameManager.AddScore();
-        GameManager.Instant.AddScore();
+        ObserverManager.Notify("addScore",1);
+      
+        
     }
-
 }
