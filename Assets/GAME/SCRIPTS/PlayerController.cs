@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.InputSystem;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -22,6 +24,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] PlayerSO playerDataSO;
 
     Rigidbody2D rigidbody2D;
+    [SerializeField] InputActionReference jumpAction, attackAction, movementAction;
 
 
     protected override void Awake()
@@ -37,30 +40,31 @@ public class PlayerController : Singleton<PlayerController>
 
     void Update()
     {
+         
         this.AutoDetectState();
         float face = this.transform.localScale.x;
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (movementAction.action.ReadValue<Vector2>().x != 0)
         {
-            face = Input.GetAxisRaw("Horizontal");
+            face = movementAction.action.ReadValue<Vector2>().x > 0 ? 1 : -1;
         }
 
         this.transform.localScale = new Vector3(face, 1, 1);
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (jumpAction.action.WasPressedThisFrame())
             this.rigidbody2D.AddForce(Vector2.up * this.playerDataSO.jumpForce);
 
-        if (Input.GetKey(KeyCode.C))
+        if (attackAction.action.IsPressed())
         {
             this._gunController.Fire(face);
         }
         
-        this._isShoot = Input.GetKey(KeyCode.C);
+        this._isShoot = attackAction.action.IsPressed();
     }
 
     void FixedUpdate()
     {
         Vector2 movement = this.rigidbody2D.velocity;
-        movement.x = Input.GetAxisRaw("Horizontal") * this.playerDataSO.speed;
+        movement.x = movementAction.action.ReadValue<Vector2>().x * this.playerDataSO.speed;
         this.rigidbody2D.velocity = movement;
     }
 

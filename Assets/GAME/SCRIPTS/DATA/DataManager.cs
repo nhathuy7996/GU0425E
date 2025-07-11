@@ -27,8 +27,13 @@ public class DataManager : MonoBehaviour
     public void SaveDataPlayer(object[] datas)
     {
         PlayerPrefs.SetString(typeof(PlayerData).ToString(), JsonUtility.ToJson((PlayerData)datas[0]));
-         
+
     }
 
+
+    public void SaveDataManual()
+    {
+        Debug.Log("Save Data Manual");
+    }
  
 }

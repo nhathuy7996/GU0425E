@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Security;
 using UnityEngine.UI;
+using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class GameManager : Singleton<GameManager>
 {
  
     [SerializeField]
     PlayerData playerData;
+    [SerializeField] Button btnAddScore;
 
     public float Score => playerData.score;
+    [SerializeField] UnityEvent testEvent;
 
     void Start()
     {
@@ -19,13 +23,23 @@ public class GameManager : Singleton<GameManager>
 
         ObserverManager.AddListener(ObserverKey.addScore, AddScore);
         ObserverManager.AddListener(ObserverKey.loadPlayerData, loadData);
-     
+        btnAddScore.onClick.RemoveAllListeners();
+
+        btnAddScore.onClick.AddListener(ResetScore);
+    
+
+        // LoadDataPlayer();
+        // ObserverManager.AddListener(ObserverKey.savePlayerData, SaveDataPlayer);
+        // ObserverManager.AddListener(ObserverKey.loadPlayerData, LoadDataPlayer);
+        // DontDestroyOnLoad(this.gameObject);s
     }
 
     void OnDestroy()
     {
         ObserverManager.RemoveListener(ObserverKey.addScore, AddScore);
         ObserverManager.RemoveListener(ObserverKey.loadPlayerData, loadData);
+
+         btnAddScore.onClick.RemoveAllListeners();
     }
 
     void loadData(params object[] datas)
