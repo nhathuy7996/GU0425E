@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-
-    [SerializeField] Text scoreText;
+ 
     [SerializeField]
     PlayerData playerData;
 
@@ -32,7 +31,6 @@ public class GameManager : Singleton<GameManager>
     void loadData(params object[] datas)
     {
         this.playerData = (PlayerData)datas[0];
-        scoreText.text = this.playerData.level.ToString();
     }
 
 
@@ -43,8 +41,7 @@ public class GameManager : Singleton<GameManager>
         {
             this.playerData.level++;
             this.playerData.score = 0;
-        }
-        scoreText.text = this.playerData.level.ToString();
+        } 
         ObserverManager.Notify(ObserverKey.savePlayerData, this.playerData);
     }
 
