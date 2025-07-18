@@ -10,6 +10,7 @@ public class LoadingManager : Singleton<LoadingManager>
 
     [SerializeField] Image loadingBar;
     [SerializeField] GameObject loadingPopup;
+    [SerializeField] Animation blackFade;
 
     protected override void Awake()
     {
@@ -31,5 +32,12 @@ public class LoadingManager : Singleton<LoadingManager>
     {
         this.asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
         loadingPopup.SetActive(true);
+        StartCoroutine(waitLoadingDone());
+    }
+
+    IEnumerator waitLoadingDone()
+    {
+        yield return new WaitUntil(()=> this.asyncOperation.isDone);
+        this.blackFade.Play();
     }
 }
