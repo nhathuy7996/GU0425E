@@ -23,9 +23,9 @@ public class GameManager : Singleton<GameManager>
 
         ObserverManager.AddListener(ObserverKey.addScore, AddScore);
         ObserverManager.AddListener(ObserverKey.loadPlayerData, loadData);
-        btnAddScore.onClick.RemoveAllListeners();
+        //btnAddScore.onClick.RemoveAllListeners();
 
-        btnAddScore.onClick.AddListener(ResetScore);
+        //btnAddScore.onClick.AddListener(ResetScore);
     
 
         // LoadDataPlayer();
