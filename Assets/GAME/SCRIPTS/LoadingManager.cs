@@ -26,11 +26,14 @@ public class LoadingManager : Singleton<LoadingManager>
         }
 
         this.loadingBar.fillAmount = this.asyncOperation.progress;
+        //if(Input.GetKeyDown(KeyCode.KeypadEnter))
+        //    this.asyncOperation.allowSceneActivation = true;
     }
 
     public void LoadScene(int sceneIndex)
     {
         this.asyncOperation = SceneManager.LoadSceneAsync(sceneIndex);
+      //  this.asyncOperation.allowSceneActivation = false;
         loadingPopup.SetActive(true);
         StartCoroutine(waitLoadingDone());
     }
