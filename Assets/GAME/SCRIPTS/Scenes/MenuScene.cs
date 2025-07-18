@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine; 
 
 public class MenuScene : MonoBehaviour
 {
     public void LoadSceneGamePlay()
     {
-        SceneManager.LoadScene(1);
+        LoadingManager.Instant.LoadScene(1);
     }
 }

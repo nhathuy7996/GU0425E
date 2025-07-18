@@ -5,14 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class GamePlayScene : MonoBehaviour
 {
+    AsyncOperation asyncOperation;
     public void reloadGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+         
+        LoadingManager.Instant.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
     public void BackToMenu()
     {
-        SceneManager.LoadScene(0);
+        LoadingManager.Instant.LoadScene(0);
     }
+  
 }
