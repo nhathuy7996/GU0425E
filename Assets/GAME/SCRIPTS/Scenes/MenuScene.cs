@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MenuScene : MonoBehaviour
 {
-    public void LoadSceneGamePlay()
+    public void LoadSceneGamePlay(int id)
     {
-        LoadingManager.Instant.LoadScene(1);
+        LoadingManager.Instant.LoadScene(id);
     }
 }
