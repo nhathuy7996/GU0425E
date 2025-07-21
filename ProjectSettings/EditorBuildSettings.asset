@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/GAME/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/GAME/Scenes/SampleScene 1.unity
+    guid: 910b783c62c4d412ba8f8ada3873ba30
+  - enabled: 1
+    path: Assets/GAME/Scenes/SampleScene 2.unity
+    guid: e848666878b6249ca8f52c9d83152d10
+  - enabled: 1
+    path: Assets/GAME/Scenes/SampleScene 3.unity
+    guid: 08b4e68a4fdab49d28b62af1d0e6720f
+  - enabled: 1
     path: Assets/GAME/Scenes/DemoInstant.unity
     guid: ae165e659a1d9294aa67c63509c231a9
   m_configObjects:
