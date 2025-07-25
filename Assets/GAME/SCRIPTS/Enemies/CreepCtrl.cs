@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class CreepCtrl : MonoBehaviour, IHitable
 {
@@ -12,6 +14,8 @@ public class CreepCtrl : MonoBehaviour, IHitable
     [SerializeField] float _attackRange = 10;
 
     [SerializeField] Slider _hpBar;
+
+    [SerializeField] LayerMask _groundLayer;
     public void Init(float speed, Slider slider)
     {
         this._hpBar = slider;
@@ -28,7 +32,7 @@ public class CreepCtrl : MonoBehaviour, IHitable
     {
         _hpBar.transform.position = this.transform.position + Vector3.up * 0.65f;
         this.DetectPlayer();
-        if (_target == null ||  Vector2.Distance((Vector2)_target, this.transform.position) < 0.5f)
+        if (_target == null || Vector2.Distance((Vector2)_target, this.transform.position) < 0.5f)
         {
             ResetTarget();
         }
@@ -37,6 +41,20 @@ public class CreepCtrl : MonoBehaviour, IHitable
         dir = dir.normalized;
 
         this.transform.Translate(dir * _speed * Time.deltaTime);
+
+        RaycastHit2D hit;
+        hit = Physics2D.Raycast(this.transform.position, Vector2.down, Mathf.Infinity, _groundLayer);
+        Debug.DrawRay(this.transform.position, Vector2.down * 100, Color.red);
+        if (hit != null && hit.collider != null)
+        {
+            if (hit.distance > 0.5f)
+            {
+                this.transform.Translate(Vector2.down * (hit.distance - 0.5f));
+            }
+            
+           
+        }
+         
     }
 
     void DetectPlayer()
@@ -58,13 +76,11 @@ public class CreepCtrl : MonoBehaviour, IHitable
     void ResetTarget()
     {
         this._target = new Vector2(Random.Range(-5, 6), Random.Range(3, 6));
-        
     }
 
 
     public void GetHit(float dmg)
     {
-
         // this._gameManager.AddScore();
         this._HP -= dmg;
         this._hpBar.value = this._HP;
