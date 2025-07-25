@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -11,73 +12,73 @@ public class CreepCtrl : MonoBehaviour, IHitable
     float maxHP = 100;
     Vector2? _target = null;
     [SerializeField] float _speed = 1;
+    public float Speed => _speed;
     [SerializeField] float _attackRange = 10;
 
     [SerializeField] Slider _hpBar;
 
     [SerializeField] LayerMask _layerMask;
- 
+
+    CreepStateBase currentCreepState;
+
+    Dictionary<Type, CreepStateBase> allState = new Dictionary<Type, CreepStateBase>();
+
+    void Awake()
+    {
+        
+        allState.Add(typeof(CreepStatePatrol), new CreepStatePatrol(this) );
+        allState.Add(typeof(CreepStateChase), new CreepStateChase(this));
+    }
+
     public void Init(float speed, Slider slider)
     {
         this._hpBar = slider;
         this._speed = speed;
-        ResetTarget();
+       
         this._HP = Random.Range(50, 100);
         this.maxHP = this._HP;
         this._hpBar.maxValue = this.maxHP;
         this._hpBar.value = this._HP;
-        this._hpBar.gameObject.SetActive(true);
+        this._hpBar.gameObject.SetActive(true); 
+        this.ChangeState(typeof(CreepStatePatrol));
+    }
+
+    public void ChangeState(Type newState)
+    {
+
+        if (!allState.ContainsKey(newState))
+            return;
+
+        if (this.currentCreepState == this.allState[newState])
+                return;
+
+        if(this.currentCreepState != null)
+            this.currentCreepState.OnExit();
+        this.currentCreepState = this.allState[newState];
+        this.currentCreepState.OnEnter();
     }
 
     void Update()
     {
+        currentCreepState?.Execute();
         _hpBar.transform.position = this.transform.position + Vector3.up * 0.65f;
-        this.DetectPlayer();
-        if (_target == null || Vector2.Distance((Vector2)_target, this.transform.position) < 0.5f)
-        {
-            ResetTarget();
-        }
-
-        Vector2 dir = (Vector2)_target - (Vector2)this.transform.position;
-
-        RaycastHit2D hit;
-        hit = Physics2D.Raycast(this.transform.position, dir, dir.sqrMagnitude, _layerMask);
-        Debug.DrawRay(this.transform.position, dir, Color.red);
-        if (hit != null && hit.collider != null)
-        {
-            if(hit.collider.GetComponent<PlayerController>() == null)
-            {
-                this._target = null;
-                return;
-            }
-           
-        }
         
-        dir = dir.normalized;
-        this.transform.Translate(dir * _speed * Time.deltaTime);
-         
     }
 
-    void DetectPlayer()
+    public Transform DetectPlayer()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(this.transform.position, _attackRange);
         foreach (Collider2D collider in colliders)
         {
             if (collider.GetComponent<PlayerController>() == null)
                 continue;
-            this._target = collider.transform.position;
-            return;
+
+            return collider.transform;
         }
 
-        if (this._target == null)
-            this.ResetTarget();
-        
+        return null;
     }
 
-    void ResetTarget()
-    {
-        this._target = new Vector2(Random.Range(-5, 6), Random.Range(3, 6));
-    }
 
 
     public void GetHit(float dmg)
