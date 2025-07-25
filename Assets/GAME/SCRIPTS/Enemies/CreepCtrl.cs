@@ -15,7 +15,8 @@ public class CreepCtrl : MonoBehaviour, IHitable
 
     [SerializeField] Slider _hpBar;
 
-    [SerializeField] LayerMask _groundLayer;
+    [SerializeField] LayerMask _layerMask;
+ 
     public void Init(float speed, Slider slider)
     {
         this._hpBar = slider;
@@ -38,22 +39,22 @@ public class CreepCtrl : MonoBehaviour, IHitable
         }
 
         Vector2 dir = (Vector2)_target - (Vector2)this.transform.position;
-        dir = dir.normalized;
-
-        this.transform.Translate(dir * _speed * Time.deltaTime);
 
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(this.transform.position, Vector2.down, Mathf.Infinity, _groundLayer);
-        Debug.DrawRay(this.transform.position, Vector2.down * 100, Color.red);
+        hit = Physics2D.Raycast(this.transform.position, dir, dir.sqrMagnitude, _layerMask);
+        Debug.DrawRay(this.transform.position, dir, Color.red);
         if (hit != null && hit.collider != null)
         {
-            if (hit.distance > 0.5f)
+            if(hit.collider.GetComponent<PlayerController>() == null)
             {
-                this.transform.Translate(Vector2.down * (hit.distance - 0.5f));
+                this._target = null;
+                return;
             }
-            
            
         }
+        
+        dir = dir.normalized;
+        this.transform.Translate(dir * _speed * Time.deltaTime);
          
     }
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7914746406733928843}
   - component: {fileID: 2620134624120431375}
   - component: {fileID: 4910419400550782144}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Creep
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,3 +137,6 @@ MonoBehaviour:
   _speed: 1
   _attackRange: 10
   _hpBar: {fileID: 0}
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 375
