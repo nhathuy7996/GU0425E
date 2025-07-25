@@ -7,7 +7,7 @@ public class CreepCtrl : MonoBehaviour, IHitable
 {
     [SerializeField] float _HP = 100;
     float maxHP = 100;
-    Vector2 _target;
+    Vector2? _target = null;
     [SerializeField] float _speed = 1;
     [SerializeField] float _attackRange = 10;
 
@@ -28,12 +28,12 @@ public class CreepCtrl : MonoBehaviour, IHitable
     {
         _hpBar.transform.position = this.transform.position + Vector3.up * 0.65f;
         this.DetectPlayer();
-        if (Vector2.Distance(_target, this.transform.position) < 0.5f)
+        if (_target == null ||  Vector2.Distance((Vector2)_target, this.transform.position) < 0.5f)
         {
             ResetTarget();
         }
 
-        Vector2 dir = _target - (Vector2)this.transform.position;
+        Vector2 dir = (Vector2)_target - (Vector2)this.transform.position;
         dir = dir.normalized;
 
         this.transform.Translate(dir * _speed * Time.deltaTime);
@@ -47,14 +47,18 @@ public class CreepCtrl : MonoBehaviour, IHitable
             if (collider.GetComponent<PlayerController>() == null)
                 continue;
             this._target = collider.transform.position;
+            return;
         }
+
+        if (this._target == null)
+            this.ResetTarget();
+        
     }
 
     void ResetTarget()
     {
-        this._target = Vector2.zero;
-        this._target.x = Random.Range(-5, 6);
-        this._target.y = Random.Range(3, 6);
+        this._target = new Vector2(Random.Range(-5, 6), Random.Range(3, 6));
+        
     }
 
 
