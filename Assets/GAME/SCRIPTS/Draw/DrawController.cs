@@ -29,6 +29,7 @@ public class DrawController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             this.rb.simulated = true;
+            ObserverManager.Notify(ObserverKey.DrawEnd);
         }
 
         if (!Input.GetMouseButton(0))

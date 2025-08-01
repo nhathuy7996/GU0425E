@@ -9,6 +9,8 @@ public static class ObserverKey
     public static readonly string addScore = "addScore"; 
     public static readonly string loadPlayerData = "loadData";
     public static readonly string savePlayerData = "saveData";
+
+    public static readonly string DrawEnd = "DrawEnd";
 }
 
 public static class ObserverManager
