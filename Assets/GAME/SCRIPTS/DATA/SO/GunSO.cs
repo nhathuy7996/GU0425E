@@ -10,4 +10,6 @@ public class GunSO : ScriptableObject
 
     public float fireSpeed;
     public Bullet bulletPrefab;
+
+    public AudioClip gunSoundClip;
 }

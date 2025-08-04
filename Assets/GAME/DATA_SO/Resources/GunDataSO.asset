@@ -16,3 +16,4 @@ MonoBehaviour:
   dmg: 30
   fireSpeed: 0.2
   bulletPrefab: {fileID: 5838989287270218877, guid: b8e1a45b384ba724d916cdaf5087a5d6, type: 3}
+  gunSoundClip: {fileID: 8300000, guid: a379a322949c64f2a905a4e9d4c78213, type: 3}

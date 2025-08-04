@@ -6,7 +6,7 @@ public class LazyPooling : Singleton<LazyPooling>
 {
     Dictionary<GameObject, List<GameObject>> pools = new Dictionary<GameObject, List<GameObject>>();
 
-     Dictionary<MonoBehaviour, List<MonoBehaviour>> pools2 = new Dictionary<MonoBehaviour, List<MonoBehaviour>>();
+     Dictionary<Behaviour, List<Behaviour>> pools2 = new Dictionary<Behaviour, List<Behaviour>>();
 
     public GameObject getObject(GameObject prefab)
     {
@@ -28,10 +28,10 @@ public class LazyPooling : Singleton<LazyPooling>
         return g;
     }
 
-    public T getObjType<T>(T prefab) where T: MonoBehaviour
+    public T getObjType<T>(T prefab) where T: Behaviour
     {
          if (!pools2.ContainsKey(prefab))
-            this.pools2.Add(prefab, new List<MonoBehaviour>());
+            this.pools2.Add(prefab, new List<Behaviour>());
 
         foreach (var item in this.pools2[prefab])
         {

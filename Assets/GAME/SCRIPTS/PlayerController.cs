@@ -25,8 +25,7 @@ public class PlayerController : Singleton<PlayerController>
 
     Rigidbody2D rigidbody2D;
     [SerializeField] InputActionReference jumpAction, attackAction, movementAction;
-
-
+ 
     protected override void Awake()
     {
         base.Awake();
@@ -56,6 +55,7 @@ public class PlayerController : Singleton<PlayerController>
         if (attackAction.action.IsPressed())
         {
             this._gunController.Fire(face);
+            
         }
         
         this._isShoot = attackAction.action.IsPressed();

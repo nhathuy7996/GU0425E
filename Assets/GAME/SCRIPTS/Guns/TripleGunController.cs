@@ -5,7 +5,7 @@ using UnityEngine;
 public class TripleGunController : MonoBehaviour, IGun
 {
     [SerializeField] Transform _fireSpot;
-    [SerializeField] GunSO gunDataSO;
+    [SerializeField] GunSO gunDataSO; 
     
      float timer = 0;
      void Update()
@@ -22,6 +22,8 @@ public class TripleGunController : MonoBehaviour, IGun
     {
         if (timer < this.gunDataSO.fireSpeed)
             return;
+
+        SoundManager.Instant.PlaySFX(this.gunDataSO.gunSoundClip);
         timer = 0;
         Quaternion q = this.gunDataSO.bulletPrefab.transform.rotation;
         q.eulerAngles = new Vector3(0, 0, face == -1 ? 180 : 0);
