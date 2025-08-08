@@ -27,9 +27,11 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] InputActionReference jumpAction, attackAction, movementAction;
 
     [SerializeField] float rayGroundDistance = 2f;
-    [SerializeField] bool _isGrounded = false;
+    [SerializeField] bool _isGrounded = false, _isSlope = false;
+    [SerializeField] float _angleSlope = 0;
 
     Collider2D _Collider;
+    [SerializeField] PhysicsMaterial2D[] physicMaterials;
  
     protected override void Awake()
     {
@@ -45,6 +47,7 @@ public class PlayerController : Singleton<PlayerController>
 
     void Update()
     {
+        
         this._isGrounded = this.IsGrounded2();
         
         this.AutoDetectState();
@@ -72,12 +75,28 @@ public class PlayerController : Singleton<PlayerController>
     {
         Vector2 movement = this.rigidbody2D.velocity;
         movement.x = movementAction.action.ReadValue<Vector2>().x * this.playerDataSO.speed;
+        if (movement.x != 0)
+        {
+            this.rigidbody2D.sharedMaterial = physicMaterials[0]; // Set to slippery material when moving
+        }
+        else if(this._isSlope)
+        {
+            this.rigidbody2D.sharedMaterial = physicMaterials[1]; 
+        }
+
+        if (this._isSlope)
+        {
+            var tmpMovement = movement.x;
+            movement.x = tmpMovement * Mathf.Cos(_angleSlope * Mathf.Deg2Rad);
+            movement.y = tmpMovement * Mathf.Sin(_angleSlope * Mathf.Deg2Rad);
+        }
+
         this.rigidbody2D.velocity = movement;
     }
 
     void AutoDetectState()
     {
-        if (this.rigidbody2D.velocity.y != 0)
+        if (this.rigidbody2D.velocity.y != 0 && !this._isSlope)
         {
             this._playerState = PLAYER_STATE.IsJump;
             return;
@@ -119,10 +138,21 @@ public class PlayerController : Singleton<PlayerController>
             if (hit != null && hit.collider != null)
             {
                 this.transform.parent = hit.transform;
+                if (hit.normal != Vector2.up)
+                {
+                    this._isSlope = true;
+                    this._angleSlope = Mathf.Atan2(hit.normal.y, hit.normal.x) * Mathf.Rad2Deg - 90;
+
+                    Debug.LogError(Vector2.Angle(hit.normal, Vector2.left));
+                }
+                else
+                {
+                    this._isSlope = false;
+                }
                 return true;
             }
         }
-        
+        this._isSlope = false;
         this.transform.parent = null;
         return false;
     }

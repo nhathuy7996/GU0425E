@@ -3217,6 +3217,9 @@ MonoBehaviour:
   movementAction: {fileID: -4847600080583480060, guid: 47eeb2e3f805f434dab18ea9de76993b, type: 3}
   rayGroundDistance: 2
   _isGrounded: 0
+  physicMaterials:
+  - {fileID: 6200000, guid: 82fecea0e8432485ba314ce40e4a2676, type: 2}
+  - {fileID: 6200000, guid: 7802b29142f3b4e248bdb444c540d3e1, type: 2}
 --- !u!50 &1535698306
 Rigidbody2D:
   serializedVersion: 4
