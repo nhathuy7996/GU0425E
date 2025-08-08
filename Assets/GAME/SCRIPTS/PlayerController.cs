@@ -25,6 +25,11 @@ public class PlayerController : Singleton<PlayerController>
 
     Rigidbody2D rigidbody2D;
     [SerializeField] InputActionReference jumpAction, attackAction, movementAction;
+
+    [SerializeField] float rayGroundDistance = 2f;
+    [SerializeField] bool _isGrounded = false;
+
+    Collider2D _Collider;
  
     protected override void Awake()
     {
@@ -35,11 +40,13 @@ public class PlayerController : Singleton<PlayerController>
         this.anim = this.GetComponentInChildren<AnimController>();
         this.rigidbody2D = this.GetComponent<Rigidbody2D>();
         this._gunController = this.GetComponentInChildren<IGun>(); 
+        this._Collider = this.GetComponent<Collider2D>();
     }
 
     void Update()
     {
-         
+        this._isGrounded = this.IsGrounded2();
+        
         this.AutoDetectState();
         float face = this.transform.localScale.x;
         if (movementAction.action.ReadValue<Vector2>().x != 0)
@@ -49,7 +56,7 @@ public class PlayerController : Singleton<PlayerController>
 
         this.transform.localScale = new Vector3(face, 1, 1);
 
-        if (jumpAction.action.WasPressedThisFrame())
+        if (jumpAction.action.WasPressedThisFrame() && this._isGrounded)
             this.rigidbody2D.AddForce(Vector2.up * this.playerDataSO.jumpForce);
 
         if (attackAction.action.IsPressed())
@@ -83,9 +90,40 @@ public class PlayerController : Singleton<PlayerController>
         this.transform.SetParent(collision2D.transform);
     }
 
-     void OnCollisionExit2D(Collision2D collision2D)
+    void OnCollisionExit2D(Collision2D collision2D)
     {
         this.transform.SetParent(null);
+    }
+
+    public bool IsGrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(this.transform.position, Vector2.down, rayGroundDistance);
+        Debug.DrawRay(this.transform.position, Vector2.down * rayGroundDistance, Color.red);
+        if (hit == null || hit.collider == null)
+        {
+            this.transform.parent = null;
+            return false;
+        }
+
+        this.transform.parent = hit.transform;
+        return true;
+    }
+
+    public bool IsGrounded2()
+    {
+        RaycastHit2D[] hits = new RaycastHit2D[10];
+        this._Collider.Cast(Vector2.down, hits, rayGroundDistance);
+        foreach (var hit in hits)
+        {
+            if (hit != null && hit.collider != null)
+            {
+                this.transform.parent = hit.transform;
+                return true;
+            }
+        }
+        
+        this.transform.parent = null;
+        return false;
     }
 
     public enum PLAYER_STATE

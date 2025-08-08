@@ -2208,7 +2208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &905961499
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2270,7 +2270,7 @@ Transform:
   m_GameObject: {fileID: 905961498}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8302014, y: 1.6777, z: 0}
+  m_LocalPosition: {x: 2.18, y: 1.6777, z: 0}
   m_LocalScale: {x: 1, y: 6.427103, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3215,6 +3215,8 @@ MonoBehaviour:
   jumpAction: {fileID: 5741888511552850891, guid: 47eeb2e3f805f434dab18ea9de76993b, type: 3}
   attackAction: {fileID: -5602012262773641883, guid: 47eeb2e3f805f434dab18ea9de76993b, type: 3}
   movementAction: {fileID: -4847600080583480060, guid: 47eeb2e3f805f434dab18ea9de76993b, type: 3}
+  rayGroundDistance: 2
+  _isGrounded: 0
 --- !u!50 &1535698306
 Rigidbody2D:
   serializedVersion: 4
