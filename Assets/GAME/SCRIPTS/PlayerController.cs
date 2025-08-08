@@ -105,6 +105,7 @@ public class PlayerController : Singleton<PlayerController>
             return false;
         }
 
+        
         this.transform.parent = hit.transform;
         return true;
     }
