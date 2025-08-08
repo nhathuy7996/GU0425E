@@ -28,14 +28,14 @@ public class LazyPooling : Singleton<LazyPooling>
         return g;
     }
 
-    public T getObjType<T>(T prefab) where T: Behaviour
+    public T getObjType<T>(T prefab) where T: Behaviour 
     {
          if (!pools2.ContainsKey(prefab))
             this.pools2.Add(prefab, new List<Behaviour>());
 
         foreach (var item in this.pools2[prefab])
         {
-            Debug.Log($"{item.name} -- {item.gameObject.activeSelf}");
+          
             if (item.gameObject.activeSelf)
                 continue;
             return (T)item;
