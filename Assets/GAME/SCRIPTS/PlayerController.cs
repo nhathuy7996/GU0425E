@@ -104,15 +104,7 @@ public class PlayerController : Singleton<PlayerController>
         this._playerState = Math.Abs(this.rigidbody2D.velocity.x) > 0.1f ? PLAYER_STATE.IsRun : PLAYER_STATE.IsIdle;
     }
 
-    void OnCollisionEnter2D(Collision2D collision2D)
-    {
-        this.transform.SetParent(collision2D.transform);
-    }
-
-    void OnCollisionExit2D(Collision2D collision2D)
-    {
-        this.transform.SetParent(null);
-    }
+   
 
     public bool IsGrounded()
     {
