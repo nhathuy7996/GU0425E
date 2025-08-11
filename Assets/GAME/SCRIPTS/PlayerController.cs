@@ -129,18 +129,21 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (hit != null && hit.collider != null)
             {
-                this.transform.parent = hit.transform;
+                Debug.LogError(hit.collider.gameObject.name);
+             
+             //  this.transform.parent = hit.transform;
                 if (hit.normal != Vector2.up)
                 {
+                       Debug.DrawRay(hit.point, hit.normal, Color.green);
                     this._isSlope = true;
                     this._angleSlope = Mathf.Atan2(hit.normal.y, hit.normal.x) * Mathf.Rad2Deg - 90;
-
-                    Debug.LogError(Vector2.Angle(hit.normal, Vector2.left));
                 }
                 else
                 {
                     this._isSlope = false;
                 }
+
+                   Debug.DrawLine(hit.point, hit.normal, Color.green);
                 return true;
             }
         }
