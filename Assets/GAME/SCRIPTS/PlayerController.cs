@@ -60,13 +60,16 @@ public class PlayerController : Singleton<PlayerController>
         this.transform.localScale = new Vector3(face, 1, 1);
 
         if (jumpAction.action.WasPressedThisFrame() && this._isGrounded)
+        {
             this.rigidbody2D.AddForce(Vector2.up * this.playerDataSO.jumpForce);
+        }
 
         if (attackAction.action.IsPressed())
-        {
-            this._gunController.Fire(face);
-            
-        }
+            {
+                this._gunController.Fire(face);
+
+            AdsManager.Instant.ShowAppOpenAd();
+            }
         
         this._isShoot = attackAction.action.IsPressed();
     }
