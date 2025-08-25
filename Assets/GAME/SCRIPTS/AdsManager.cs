@@ -12,6 +12,8 @@ public class AdsManager : Singleton<AdsManager>
     private RewardedAd rewardedAd;
 
     private AppOpenAd appOpenAd;
+
+    float delayBanner = 1, delayInter = 1, DelayReward = 1, DelayAppOpen = 1;
     void Init()
     {
         // Initialize the Google Mobile Ads SDK.
@@ -39,11 +41,14 @@ public class AdsManager : Singleton<AdsManager>
         {
             Debug.Log("Banner loaded");
             bannerView.Show();
+            delayBanner = 1;
         };
         bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
         {
             Debug.LogError("Banner failed to load: " + error);
-            LoadBanner();
+            Invoke(nameof(LoadBanner), delayBanner);
+            delayBanner *= 2;
+            
         };
         bannerView.OnAdPaid += (AdValue adValue) =>
         {
@@ -107,9 +112,13 @@ public class AdsManager : Singleton<AdsManager>
         {
             if (error != null)
             {
-                // The ad failed to load.
+               
+               Invoke(nameof(LoadInterstitial), delayInter);
+               delayInter *= 2;
                 return;
             }
+
+            delayInter = 1;
             this.interstitial = ad;
 
             ad.OnAdPaid += (AdValue adValue) =>
@@ -164,9 +173,12 @@ public class AdsManager : Singleton<AdsManager>
         {
             if (error != null)
             {
-                this.LoadRewardedAd();
+                Invoke(nameof(LoadRewardedAd), DelayReward);
+                DelayReward *= 2;
                 return;
             }
+
+            DelayReward = 1;
             this.rewardedAd = ad;
             // The ad was loaded.
             ad.OnAdPaid += (AdValue adValue) =>
@@ -224,11 +236,13 @@ public class AdsManager : Singleton<AdsManager>
        {
            if (error != null)
            {
-               this.LoadAppOpenAd();
+               Invoke(nameof(LoadAppOpenAd), DelayAppOpen);
+               DelayAppOpen *= 2;
                // The ad failed to load.
                return;
            }
 
+           DelayAppOpen = 1;
            this.appOpenAd = ad;
            // The ad was loaded.
            ad.OnAdPaid += (AdValue adValue) =>
