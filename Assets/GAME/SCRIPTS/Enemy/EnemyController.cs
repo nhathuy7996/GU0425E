@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Firebase.Analytics;
+using Firebase.RemoteConfig;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -34,6 +37,21 @@ public class EnemyController : MonoBehaviour
     {
         // Implement attack logic here
         Debug.Log("Enemy is attacking!");
+        Parameter[] parameters = {
+            new Parameter("level", 0),
+            new Parameter("world_id", 0),
+            new Parameter("time_stamp", DateTime.UtcNow.ToString())
+        };
+
+        FirebaseManager.Instant.LogEvent("test", parameters);
+
+
+        if (FirebaseKeys.granny_max_chase_time > 2)
+        {
+            
+        }
+       
+       
     }
 
     void Act_Chase(EnemyContext c)
